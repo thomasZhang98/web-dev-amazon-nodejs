@@ -3,7 +3,7 @@ const schema = mongoose.Schema({
   orderNumber: Number,
   orderTime: Date,
   deliveredTime: Date,
-  consumerId: Number,
+  buyerId: Number,
   shippingAddress: String,
   productId: Number,
   productName: String,
