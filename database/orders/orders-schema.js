@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 const schema = mongoose.Schema({
   orderNumber: Number,
   orderTime: Date,
-  deliveredTime: Date,
+  delivered: Boolean,
   buyerId: Number,
   shippingAddress: String,
   productId: Number,

@@ -1,24 +1,26 @@
 import * as ordersDao from "../database/orders/orders-dao.js";
 
+const findOrderItem = async (req, res) => {
+  const orderId = req.params.oid
+  const orderItem = await ordersDao.findOrder(orderId);
+  res.json(orderItem);
+}
+
 const findOrder = async (req, res) => {
   const orderNumber = req.params.orderNumber
   const order = await ordersDao.findByOrderNumber(orderNumber);
   res.json(order);
 }
 
-const findOrderByBuyerId  = async (req, res) => {
-  const buyerId = req.params.buyerId
-  const order = await ordersDao.findByBuyerId(buyerId);
-  res.json(order);
-}
-
-const createOrder = async (req, res) => {
-  const newOrder = req.body;
-  const insertedOrder = await ordersDao.createOrder(newOrder);
+const createOrderItem  = async (req, res) => {
+  const newOrderItem = req.body;
+  const orderDate = new Date(newOrderItem.orderTime);
+  newOrderItem.orderTime = orderDate;
+  const insertedOrder = await ordersDao.createOrder(newOrderItem);
   res.json(insertedOrder);
 }
 
-const updateOrder = async (req, res) => {
+const updateOrderItem  = async (req, res) => {
   const orderIdToUpdate = req.params.oid;
   const updatedOrder = req.body;
   const response = await ordersDao.updateOrder(orderIdToUpdate, updatedOrder);
@@ -39,10 +41,10 @@ const deleteOrder = async (req, res) => {
 }
 
 export default (app) => {
-  app.post('/api/orders', createOrder);
+  app.get('/api/orders/item/:oid', findOrderItem);
   app.get('/api/orders/:orderNumber', findOrder);
-  app.get('/api/orders/:buyerId', findOrderByBuyerId);
-  app.put('/api/orders/:oid', updateOrder)
-  app.delete('/api/orders/:oid', deleteOrderItem);
+  app.post('/api/orders/item', createOrderItem);
+  app.put('/api/orders/item/:oid', updateOrderItem)
+  app.delete('/api/orders/item/:oid', deleteOrderItem);
   app.delete('/api/orders/:orderNumber', deleteOrder);
 }
