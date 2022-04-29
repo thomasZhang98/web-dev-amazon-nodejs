@@ -1,4 +1,4 @@
-import * as ordersDao from "../database/orders/orders-dao.js";
+import ordersDao from "../database/orders/orders-dao.js";
 
 const findOrderItem = async (req, res) => {
   const orderId = req.params.oid
@@ -25,19 +25,19 @@ const updateOrderItem  = async (req, res) => {
   const updatedOrder = req.body;
   const response = await ordersDao.updateOrder(orderIdToUpdate, updatedOrder);
   const status = response.acknowledged ? 200 : 500;
-  res.send(status);
+  res.sendStatus(status);
 }
 
 const deleteOrderItem = async (req, res) => {
   const orderIdToDelete = req.params.oid;
   const status = await ordersDao.deleteOrderItem(orderIdToDelete);
-  res.send(status);
+  res.sendStatus(status);
 }
 
 const deleteOrder = async (req, res) => {
   const orderNumberToDelete = req.params.orderNumber;
   const status = await ordersDao.deleteOrder(orderNumberToDelete);
-  res.send(status);
+  res.sendStatus(status);
 }
 
 export default (app) => {

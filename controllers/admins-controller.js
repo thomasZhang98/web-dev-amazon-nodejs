@@ -1,23 +1,12 @@
-import * as adminsDao from "../database/admins/admins-dao.js";
-
-
-const adminsController = (app) => {
-  app.post('/api/admins', createAdmin);
-  app.get('/api/admins', findAllAdmins);
-  app.put('/api/admins/:aid', updateAdmin);
-  app.delete('/api/admins/:aid', deleteAdmin);
-}
-
+import adminsDao from "../database/admins/admins-dao.js";
 
 const createAdmin = async (req, res) => {
-
   const newAdmin = {
     "userName": "Admin",
     "password": "123123Admin",
     "firstName": "Admin",
     "lastName": "123123",
     "level":"1",
-
     ...req.body
   }
 
@@ -44,23 +33,9 @@ const deleteAdmin = async (req, res) => {
   res.send(status);
 }
 
-
-
-export default adminsController;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+export default (app) => {
+  app.post('/api/admins', createAdmin);
+  app.get('/api/admins', findAllAdmins);
+  app.put('/api/admins/:aid', updateAdmin);
+  app.delete('/api/admins/:aid', deleteAdmin);
+};
