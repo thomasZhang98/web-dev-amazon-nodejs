@@ -1,5 +1,12 @@
 import buyersModel from './buyers-model.js';
-export const findAllBuyers = () => buyersModel.find();
-export const createBuyer = (buyer) => buyersModel.create(buyer);
-export const deleteBuyer = (bid) => buyersModel.deleteOne({_id: bid});
-export const updateBuyer = (bid, buyer) => buyersModel.updateOne({_id: bid}, {$set: buyer})
+const findAllBuyers = async () => await buyersModel.find();
+const createBuyer = async (buyer) => await buyersModel.create(buyer);
+const deleteBuyer = async (bid) => await buyersModel.deleteOne({_id: bid});
+const updateBuyer = async (bid, buyer) => await buyersModel.updateOne({_id: bid}, {$set: buyer})
+
+export default {
+    findAllBuyers,
+    createBuyer,
+    deleteBuyer,
+    updateBuyer
+}
