@@ -1,16 +1,13 @@
 import mongoose from 'mongoose';
 const schema = mongoose.Schema({
-  orderNumber: Number,
-  orderTime: Date,
-  delivered: Boolean,
   buyerId: Number,
   shippingAddress: String,
+  orderTime: Date,
+  delivered: Boolean,
   productId: Number,
   productName: String,
   productBrand: String,
   productImage: String,
-  unitPrice: Number,
-  quantity: Number,
-  totalPrice: Number,
+  price: Number,
 }, {collection: 'orders'});
 export default schema;
