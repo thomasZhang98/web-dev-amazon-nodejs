@@ -1,11 +1,12 @@
-import * as buyersDao from "../database/buyers/buyers-dao";
-
+import * as buyersDao from "../database/buyers/buyers-dao.js";
+import * as ordersDao from "../database/orders/orders-dao.js";
 
 const buyerController = (app) => {
   app.post('/api/buyers', createBuyer);
   app.get('/api/buyers', findAllBuyers);
   app.put('/api/buyers/:bid', updateBuyer);
   app.delete('/api/buyers/:bid', deleteBuyer);
+  app.get('/api/buyers/:bid/orders', findOrders)
 }
 
 
@@ -42,6 +43,12 @@ const deleteBuyer = async (req, res) => {
   const buyerIdToDelete = req.params.bid;
   const status = await buyersDao.deleteBuyer(buyerIdToDelete);
   res.send(status);
+}
+
+const findOrders  = async (req, res) => {
+  const buyerId = req.params.bid
+  const order = await ordersDao.findByBuyerId(buyerId);
+  await res.json(order);
 }
 
 

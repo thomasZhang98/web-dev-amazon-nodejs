@@ -1,7 +1,7 @@
 import * as adminsDao from "../database/admins/admins-dao.js";
 
 
-const adminController = (app) => {
+const adminsController = (app) => {
   app.post('/api/admins', createAdmin);
   app.get('/api/admins', findAllAdmins);
   app.put('/api/admins/:aid', updateAdmin);
@@ -46,7 +46,7 @@ const deleteAdmin = async (req, res) => {
 
 
 
-export default adminController;
+export default adminsController;
 
 
 
