@@ -1,17 +1,24 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 const productsSchema = mongoose.Schema(
   {
-    productID: String,  // ID for the whole product, get from amazonAPI 'asin' field
-    itemID: String, // ID for individual item, generate
-    name: String, // this field is 'title' in the amazonAPI
+    // data from external API
+    asin: {type: String, unique: true},  // ID for the whole product, get from amazonAPI 'asin' field
+    title: String, // this field is 'title' in the amazonAPI
     brand: String,
     image: String,
     price: String,
-    rating: Number,
-    description: String,
+    feature_bullets: [String],
     link: String,
-    bookmarks: Number,
+    // locally created data
+    rating: {type: Number, default: 0},
+    bookmarks: [String],
+    comments: [{
+        buyerID: String,
+        comment: String,
+        rating: Number
+    }]
   },
   { collection: "products" }
 );
-module.exports = productsSchema;
+
+export default productsSchema;
