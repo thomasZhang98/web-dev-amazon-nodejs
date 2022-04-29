@@ -8,8 +8,6 @@ const findOrder = async (req, res) => {
 
 const createOrder  = async (req, res) => {
   const newOrderItem = req.body;
-  const orderDate = new Date(newOrderItem.orderTime);
-  newOrderItem.orderTime = orderDate;
   const insertedOrder = await ordersDao.createOrder(newOrderItem);
   res.json(insertedOrder);
 }
