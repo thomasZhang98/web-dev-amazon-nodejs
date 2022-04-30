@@ -24,9 +24,11 @@ const bookmarkProduct = async (product) => {
     }
 }
 
-const findProductByAsin = async asin => await productsModel.findOne({asin: asin})
+const findProductByAsin = async asin => await productsModel.findOne({asin: asin});
+const findAllProducts = async () => await productsModel.find();
 
 export default {
     bookmarkProduct,
-    findProductByAsin
+    findProductByAsin,
+    findAllProducts
 }
