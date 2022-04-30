@@ -1,15 +1,14 @@
 import mongoose from 'mongoose';
 const buyersSchema = mongoose.Schema({
-  role: String,
-  userName: String,
+  userName: {type: String, unique: true},
+  role: {type: String, default: 'BUYER'},
+  bookmarks: {type: [String], default: []},
   // hidden
   password: String,
-  firstName: String,
-  lastName: String,
-  phoneNumber: Number,
-  // orders: order,
-
-
+  firstName: {type: String, default: ''},
+  lastName: {type: String, default: ''},
+  phoneNumber: {type: String, default: ''},
+  orders: {type: [String], default: []}
 }, {collection: 'buyers'});
 
 export default buyersSchema;

@@ -15,17 +15,8 @@ const buyerController = (app) => {
 };
 
 const createBuyer = async (req, res) => {
-  const newBuyer = {
-    userName: "Buyer",
-    password: "123123Buyer",
-    firstName: "Buyer",
-    lastName: "Byr",
-
-    ...req.body,
-  };
-
-  const insertedBuyers = await buyersDao.createBuyer(newBuyer);
-  await res.json(insertedBuyers);
+  const insertedBuyers = await buyersDao.createBuyer(req.body);
+  res.json(insertedBuyers);
 };
 
 const findAllBuyers = async (req, res) => {
@@ -63,7 +54,7 @@ const register = async (req, res) => {
     res.sendStatus(403);
   } else {
     const actualBuyer = await buyersDao.createBuyer(buyer);
-    req.session["currentBuyer"] = actualBuyer;
+    req.session["currentUser"] = actualBuyer;
     res.json(actualBuyer);
   }
 };
@@ -74,17 +65,17 @@ const login = async (req, res) => {
     req.body.password
   );
   if (existingBuyer) {
-    req.session["currentBuyer"] = existingBuyer;
-    return res.send(existingBuyer);
+    req.session["currentUser"] = existingBuyer;
+    res.sendStatus(200);
   } else {
-    return res.sendStatus(503);
+    res.sendStatus(503);
   }
 };
 
 const profile = (req, res) => {
-  const currentBuyer = req.session["currentBuyer"];
-  if (currentBuyer) {
-    res.json(currentBuyer);
+  const currentUser = req.session["currentUser"];
+  if (currentUser) {
+    res.json(currentUser);
   } else {
     res.sendStatus(503);
   }

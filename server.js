@@ -1,22 +1,25 @@
 import express from 'express';
 import cors from 'cors';
+import mongoose from "mongoose";
+import session from 'express-session';
 import ordersController from "./controllers/orders-controller.js";
 import buyersController from "./controllers/buyers-controller.js";
 import adminsController from "./controllers/admins-controller.js";
 import productsController from "./controllers/products-controller.js";
-import mongoose from "mongoose";
 
 const CONNECTION_STRING = process.env.DB_CONNECTION_STRING || 'mongodb://localhost:27017/webdevamazon'
 mongoose.connect(CONNECTION_STRING);
 
-const session = require('express-session')
-
 const app = express();
-app.use(cors());
+app.use(cors({
+  credentials: true,
+  // TODO: change to netlify link
+  origin: 'http://localhost:3000'
+}));
 app.use(express.json());
 
 const sess = {
-  secret: 'keyboard cat', // TODO: move this to environment variable
+  secret: 'web-dev amazon', // TODO: move this to environment variable
   cookie: {}
 }
 
@@ -26,8 +29,6 @@ if (app.get('env') === 'production') {
 }
 
 app.use(session(sess))
-
-
 
 ordersController(app);
 buyersController(app);

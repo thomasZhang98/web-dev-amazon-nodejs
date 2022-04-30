@@ -1,28 +1,47 @@
 import * as adminsDao from "../database/admins/admins-dao.js";
 
-
 const adminsController = (app) => {
+  app.post("/api/admins/register", register);
+  app.post("/api/admins/login", login);
+
   app.post('/api/admins', createAdmin);
   app.get('/api/admins', findAllAdmins);
   app.put('/api/admins/:aid', updateAdmin);
   app.delete('/api/admins/:aid', deleteAdmin);
 }
 
+const register = async (req, res) => {
+  const admin = req.body;
+  const existingAdmin = await adminsDao.findAdminsByCredentials(
+      admin.userName,
+      admin.password
+  );
+
+  if (existingAdmin) {
+    res.sendStatus(403);
+  } else {
+    const actualAdmin = await adminsDao.createAdmin(admin);
+    req.session["currentUser"] = actualAdmin;
+    res.json(actualAdmin);
+  }
+};
+
+const login = async (req, res) => {
+  const existingAdmin = await adminsDao.findAdminsByCredentials(
+      req.body.userName,
+      req.body.password
+  );
+  if (existingAdmin) {
+    req.session["currentUser"] = existingAdmin;
+    res.sendStatus(200);
+  } else {
+    res.sendStatus(503);
+  }
+};
 
 const createAdmin = async (req, res) => {
-
-  const newAdmin = {
-    "userName": "Admin",
-    "password": "123123Admin",
-    "firstName": "Admin",
-    "lastName": "123123",
-    "level":"1",
-
-    ...req.body
-  }
-
-  const insertedAdmins = await adminsDao.createAdmin(newAdmin);
-  await res.json(insertedAdmins);
+  const insertedAdmin = await adminsDao.createAdmin(req.body);
+  res.json(insertedAdmin);
 }
 
 const findAllAdmins = async (req, res) => {
