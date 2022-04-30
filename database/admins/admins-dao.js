@@ -1,6 +1,14 @@
 import adminsModel from './admins-model.js';
-export const findAllAdmins = () => adminsModel.find();
-export const findAdminsByCredentials = async (userName, password) => await adminsModel.findOne({userName, password});
-export const createAdmin = (admin) => adminsModel.create(admin);
-export const deleteAdmin = (aid) => adminsModel.deleteOne({_id: aid});
-export const updateAdmin = (aid, admin) => adminsModel.updateOne({_id: aid}, {$set: admin})
+const findAllAdmins = async () => await adminsModel.find();
+const findAdminsByCredentials = async (userName, password) => await adminsModel.findOne({userName, password});
+const createAdmin = async (admin) => await adminsModel.create(admin);
+const deleteAdmin = async (aid) => await adminsModel.deleteOne({_id: aid});
+const updateAdmin = async (aid, admin) => await adminsModel.updateOne({_id: aid}, {$set: admin})
+
+export default {
+    findAllAdmins,
+    findAdminsByCredentials,
+    createAdmin,
+    deleteAdmin,
+    updateAdmin
+}

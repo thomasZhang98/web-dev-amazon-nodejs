@@ -1,6 +1,14 @@
 import ordersModel from './orders-model.js';
-export const findOrder = (oid) => ordersModel.find({_id: oid});
-export const findByBuyerId = (buyerId) => ordersModel.find({buyerId: buyerId});
-export const createOrder = (order) => ordersModel.create(order);
-export const updateOrder = (oid, order) => ordersModel.updateOne({_id: oid}, {$set: order});
-export const deleteOrder = (oid) => ordersModel.deleteOne({_id: oid});
+const findOrder = async (oid) => await ordersModel.find({_id: oid});
+const findByBuyerId = async (buyerId) => await ordersModel.find({buyerId: buyerId});
+const createOrder = async (order) => await ordersModel.create(order);
+const updateOrder = async (oid, order) => await ordersModel.updateOne({_id: oid}, {$set: order});
+const deleteOrder = async (oid) => await ordersModel.deleteOne({_id: oid});
+
+export default {
+    findOrder,
+    findByBuyerId,
+    createOrder,
+    updateOrder,
+    deleteOrder
+}

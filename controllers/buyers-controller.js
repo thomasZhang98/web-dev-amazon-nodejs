@@ -1,18 +1,6 @@
-import * as buyersDao from "../database/buyers/buyers-dao.js";
-import * as ordersDao from "../database/orders/orders-dao.js";
 
-const buyerController = (app) => {
-  app.post("/api/register", register);
-  app.post("/api/login", login);
-  app.post("/api/logout", logout);
-  app.post("/api/profile", profile);
-
-  app.post("/api/buyers", createBuyer);
-  app.get("/api/buyers", findAllBuyers);
-  app.put("/api/buyers/:bid", updateBuyer);
-  app.delete("/api/buyers/:bid", deleteBuyer);
-  app.get("/api/buyers/:bid/orders", findOrders);
-};
+import buyersDao from "../database/buyers/buyers-dao.js";
+import ordersDao from "../database/orders/orders-dao.js";
 
 const createBuyer = async (req, res) => {
   const insertedBuyers = await buyersDao.createBuyer(req.body);
@@ -86,4 +74,16 @@ const logout = (req, res) => {
   res.sendStatus(200);
 };
 
-export default buyerController;
+
+export default (app) => {
+  app.post("/api/register", register);
+  app.post("/api/login", login);
+  app.post("/api/logout", logout);
+  app.post("/api/profile", profile);
+
+  app.post('/api/buyers', createBuyer);
+  app.get('/api/buyers', findAllBuyers);
+  app.put('/api/buyers/:bid', updateBuyer);
+  app.delete('/api/buyers/:bid', deleteBuyer);
+  app.get('/api/buyers/:bid/orders', findOrders)
+};
