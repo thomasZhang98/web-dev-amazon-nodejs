@@ -1,4 +1,4 @@
-import * as ordersDao from "../database/orders/orders-dao.js";
+import ordersDao from "../database/orders/orders-dao.js"
 
 const findOrder = async (req, res) => {
   const orderId = req.params.oid
