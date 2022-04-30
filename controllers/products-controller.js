@@ -12,7 +12,13 @@ const findProductByAsin = async (req, res) => {
     res.json(product)
 }
 
+const findAllProducts = async (req, res) => {
+    const products = await productsDao.findAllProducts();
+    res.json(products);
+}
+
 export default (app) => {
     app.post('/api/bookmarks', bookmarkProduct);
     app.get('/api/products/:asin', findProductByAsin);
+    app.get('/api/products', findAllProducts);
 }
