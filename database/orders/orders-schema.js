@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 const schema = mongoose.Schema({
-  buyerId: Number,
+  buyerId: String,
   shippingAddress: String,
   orderTime: Date,
   productId: Number,

@@ -12,6 +12,11 @@ const findAllBuyers = async (req, res) => {
   await res.json(buyers);
 };
 
+const findOneBuyer = async (req, res) => {
+  const buyer = await buyersDao.findOneBuyer(req.params.bid);
+  res.json(buyer);
+};
+
 const updateBuyer = async (req, res) => {
   const buyerIdToUpdate = req.params.bid;
   const updatedBuyer = req.body;
@@ -83,6 +88,7 @@ export default (app) => {
 
   app.post('/api/buyers', createBuyer);
   app.get('/api/buyers', findAllBuyers);
+  app.get('/api/buyers/:bid', findOneBuyer);
   app.put('/api/buyers/:bid', updateBuyer);
   app.delete('/api/buyers/:bid', deleteBuyer);
   app.get('/api/buyers/:bid/orders', findOrders)

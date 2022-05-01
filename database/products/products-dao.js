@@ -1,11 +1,12 @@
 import productsModel from "./products-model.js";
+import buyersModel from "../buyers/buyers-model.js";
 
-const bookmarkProduct = async (product) => {
+const bookmarkProduct = async (product, buyer_id) => {
     const existingProduct = await productsModel.findOne({asin: product.asin})
     if (existingProduct) {
         // update
         await productsModel.updateOne({asin: product.asin}, {
-            $push: {bookmarks: 'test_buyerId3'}
+            $push: {bookmarks: buyer_id}
         })
     } else {
         // insert
@@ -18,9 +19,27 @@ const bookmarkProduct = async (product) => {
             feature_bullets: product.feature_bullets,
             link: product.link,
             rating: 0,
-            bookmarks: ['test_buyerId'],
+            bookmarks: [buyer_id],
             comments: []
         })
+    }
+    // Insert product asin to buyer's bookmarks
+    await buyersModel.updateOne({_id: buyer_id}, {
+        $push: {bookmarks: product.asin}
+    })
+}
+
+const unbookmarkProduct = async (product, buyer_id) => {
+    try {
+        const existingProduct = await productsModel.findOne({asin: product.asin})
+        await productsModel.updateOne({asin: product.asin}, {
+            $pull: {bookmarks: buyer_id}
+        })
+        await buyersModel.updateOne({_id: buyer_id}, {
+            $pull: {bookmarks: product.asin}
+        })
+    } catch (e) {
+        alert('Product not found!')
     }
 }
 
@@ -29,6 +48,7 @@ const findAllProducts = async () => await productsModel.find();
 
 export default {
     bookmarkProduct,
+    unbookmarkProduct,
     findProductByAsin,
     findAllProducts
 }
