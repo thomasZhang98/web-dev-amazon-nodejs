@@ -33,7 +33,7 @@ app.use(session(sess))
 ordersController(app);
 buyersController(app);
 adminsController(app);
-
 productsController(app);
+
 app.listen(process.env.PORT || 4000);
 app.get('/', (req, res) => {res.send('Welcome to Amazon!')})
