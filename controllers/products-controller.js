@@ -2,7 +2,15 @@ import productsDao from "../database/products/products-dao.js";
 
 const bookmarkProduct = async (req, res) => {
     const product = req.body
-    await productsDao.bookmarkProduct(product)
+    const buyer_id = req.session['currentUser']._id
+    await productsDao.bookmarkProduct(product, buyer_id)
+    res.sendStatus(200)
+}
+
+const unbookmarkProduct = async (req, res) => {
+    const product = req.body
+    const buyer_id = req.session['currentUser']._id
+    await productsDao.unbookmarkProduct(product, buyer_id)
     res.sendStatus(200)
 }
 
@@ -19,6 +27,7 @@ const findAllProducts = async (req, res) => {
 
 export default (app) => {
     app.post('/api/bookmarks', bookmarkProduct);
+    app.post('/api/unbookmarks', unbookmarkProduct);
     app.get('/api/products/:asin', findProductByAsin);
     app.get('/api/products', findAllProducts);
 }

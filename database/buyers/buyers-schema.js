@@ -7,8 +7,7 @@ const buyersSchema = mongoose.Schema({
   password: String,
   firstName: {type: String, default: ''},
   lastName: {type: String, default: ''},
-  phoneNumber: {type: String, default: ''},
-  orders: {type: [String], default: []}
+  phoneNumber: {type: String, default: ''}
 }, {collection: 'buyers'});
 
 export default buyersSchema;
