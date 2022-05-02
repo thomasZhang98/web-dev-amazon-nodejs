@@ -25,9 +25,16 @@ const findAllProducts = async (req, res) => {
     res.json(products);
 }
 
+const addComment = async (req, res) => {
+    const { buyer_id, product_id, comment } =  req.params;
+    const product = await productsDao.addComment(product_id. buyer_id, comment)
+    res.json(product)
+}
+
 export default (app) => {
     app.post('/api/bookmarks', bookmarkProduct);
     app.post('/api/unbookmarks', unbookmarkProduct);
     app.get('/api/products/:asin', findProductByAsin);
     app.get('/api/products', findAllProducts);
+    app.get('api/product/addComment', addComment)
 }
