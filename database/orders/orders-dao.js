@@ -3,7 +3,7 @@ import productsModel from '../products/products-model.js';
 
 const findOrder = async (oid) => await ordersModel.find({_id: oid});
 const findByBuyerId = async (buyerId) => await ordersModel.find({buyerId: buyerId});
-const createOrder = async (order) => await ordersModel.create(order);
+// const createOrder = async (order) => await ordersModel.create(order);
 const updateOrder = async (oid, order) => await ordersModel.updateOne({_id: oid}, {$set: order});
 const deleteOrder = async (oid) => await ordersModel.deleteOne({_id: oid});
 
@@ -52,7 +52,7 @@ const makeOrder = async (product, buyer_id) => {
 export default {
     findOrder,
     findByBuyerId,
-    createOrder,
+    // createOrder,
     updateOrder,
     deleteOrder,
     makeOrder

@@ -6,11 +6,11 @@ const findOrder = async (req, res) => {
   res.json(orderItem);
 }
 
-const createOrder  = async (req, res) => {
-  const newOrderItem = req.body;
-  const insertedOrder = await ordersDao.createOrder(newOrderItem);
-  res.json(insertedOrder);
-}
+// const createOrder  = async (req, res) => {
+//   const newOrderItem = req.body;
+//   const insertedOrder = await ordersDao.createOrder(newOrderItem);
+//   res.json(insertedOrder);
+// }
 
 const updateOrder = async (req, res) => {
   const orderIdToUpdate = req.params.oid;
@@ -26,9 +26,16 @@ const deleteOrder = async (req, res) => {
   res.send(status);
 }
 
+const makeOrder = async (req, res) => {
+  const newOrderItem = req.body;
+  const buyer_id = req.session['currentUser']._id
+  const madeOrder = await ordersDao.makeOrder(newOrderItem, buyer_id);
+  res.json(madeOrder);
+}
+
 export default (app) => {
   app.get('/api/orders/:oid', findOrder);
-  app.post('/api/orders', createOrder);
+  app.post('/api/orders', makeOrder);
   app.put('/api/orders/:oid', updateOrder)
   app.delete('/api/orders/:oid', deleteOrder);
 }
