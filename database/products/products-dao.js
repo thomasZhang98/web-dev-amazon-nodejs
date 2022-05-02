@@ -6,7 +6,7 @@ const bookmarkProduct = async (product, buyer_id) => {
     if (existingProduct) {
         // update
         await productsModel.updateOne({asin: product.asin}, {
-            $push: {bookmarks: buyer_id}
+            $set: {bookmarks: existingProduct.bookmarks + 1}
         })
     } else {
         // insert
@@ -18,9 +18,7 @@ const bookmarkProduct = async (product, buyer_id) => {
             price: product.price,
             feature_bullets: product.feature_bullets,
             link: product.link,
-            rating: 0,
-            bookmarks: [buyer_id],
-
+            bookmarks: 1
         })
     }
     // Insert product asin to buyer's bookmarks
@@ -33,7 +31,7 @@ const unbookmarkProduct = async (product, buyer_id) => {
     try {
         const existingProduct = await productsModel.findOne({asin: product.asin})
         await productsModel.updateOne({asin: product.asin}, {
-            $pull: {bookmarks: buyer_id}
+            $set: {bookmarks: existingProduct.bookmarks - 1}
         })
         await buyersModel.updateOne({_id: buyer_id}, {
             $pull: {bookmarks: product.asin}
