@@ -10,7 +10,12 @@ const productsSchema = mongoose.Schema(
     feature_bullets: [String],
     link: String,
     // locally created data
-    bookmarks: {type: Number, default: 0}
+    bookmarks: {type: Number, default: 0},
+    comments: [{
+        buyerID: String,
+        userName: String,
+        comment: String
+    }]
   },
   { collection: "products" }
 );

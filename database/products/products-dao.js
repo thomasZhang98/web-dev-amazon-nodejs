@@ -40,6 +40,18 @@ const unbookmarkProduct = async (product, buyer_id) => {
         alert('Product not found!')
     }
 }
+// add new comment to the existing comments
+// comment: { comment, userId }
+const addComment = async (product_id, userName, buyer_id, comment) => {
+    try {
+        const _comment = { comment: comment, buyerID: buyer_id, userName: userName };
+        await productsModel.updateOne({asin: product_id}, {
+            $push: {comments: _comment}
+        })
+    } catch (e) {
+        alert('Product not found!')
+    }
+}
 
 const findProductByAsin = async asin => await productsModel.findOne({asin: asin});
 const findAllProducts = async () => await productsModel.find();
@@ -48,5 +60,6 @@ export default {
     bookmarkProduct,
     unbookmarkProduct,
     findProductByAsin,
-    findAllProducts
+    findAllProducts,
+    addComment,
 }
