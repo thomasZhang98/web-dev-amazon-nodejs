@@ -6,12 +6,6 @@ const findOrder = async (req, res) => {
   res.json(orderItem);
 }
 
-// const createOrder  = async (req, res) => {
-//   const newOrderItem = req.body;
-//   const insertedOrder = await ordersDao.createOrder(newOrderItem);
-//   res.json(insertedOrder);
-// }
-
 const updateOrder = async (req, res) => {
   const orderIdToUpdate = req.params.oid;
   const updatedOrder = req.body;

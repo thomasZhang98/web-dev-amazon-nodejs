@@ -3,7 +3,7 @@ const schema = mongoose.Schema({
   buyerId: String,
   shippingAddress: {type: String, default: 'Home'},
   orderTime: Date,
-  productId: Number,
+  productId: String,
   productName: String,
   productBrand: String,
   productImage: String,
