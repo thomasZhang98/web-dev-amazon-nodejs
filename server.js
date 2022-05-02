@@ -1,5 +1,5 @@
 import express from 'express';
-import dotenv  from "dotenv"
+
 import cors from 'cors';
 import mongoose from "mongoose";
 import session from 'express-session';
@@ -8,12 +8,8 @@ import buyersController from "./controllers/buyers-controller.js";
 import adminsController from "./controllers/admins-controller.js";
 import productsController from "./controllers/products-controller.js";
 
-dotenv.config()
-
-
 const CONNECTION_STRING = process.env.DB_CONNECTION_STRING || 'mongodb://localhost:27017/webdevamazon'
 mongoose.connect(CONNECTION_STRING);
-console.log(CONNECTION_STRING)
 
 const app = express();
 app.use(cors({

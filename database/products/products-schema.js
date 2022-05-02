@@ -13,6 +13,7 @@ const productsSchema = mongoose.Schema(
     bookmarks: [String],
     comments: [{
         buyerID: String,
+        userName: String,
         comment: String
     }]
   },

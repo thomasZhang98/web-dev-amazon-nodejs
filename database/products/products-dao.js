@@ -44,14 +44,11 @@ const unbookmarkProduct = async (product, buyer_id) => {
 }
 // add new comment to the existing comments
 // comment: { comment, userId }
-const addComment = async (product_id, buyer_id, comment) => {
+const addComment = async (product_id, userName, buyer_id, comment) => {
     try {
-        const existingProduct = await productsModel.findOne({asin: product_id})
-        const comments = existingProduct.comments
-        const _comment = { comment, buyer_id };
-        comments.push(_comment)
-        productsModel.updateOne({_id: product_id}, {
-            $set: {comments: comments}
+        const _comment = { comment: comment, buyerID: buyer_id, userName: userName };
+        await productsModel.updateOne({asin: product_id}, {
+            $push: {comments: _comment}
         })
     } catch (e) {
         alert('Product not found!')
