@@ -30,6 +30,6 @@ const makeOrder = async (req, res) => {
 export default (app) => {
   app.get('/api/orders/:oid', findOrder);
   app.post('/api/orders', makeOrder);
-  app.put('/api/orders/:oid', updateOrder)
+  app.put('/api/orders/:oid', updateOrder);
   app.delete('/api/orders/:oid', deleteOrder);
 }
